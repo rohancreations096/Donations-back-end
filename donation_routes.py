@@ -69,3 +69,10 @@ async def razorpay_webhook(request: Request):
 async def get_my_donations(user=Depends(require_auth)):
     docs = await list_donations_for_user(user["uid"])
     return {"donations": docs}
+from fastapi import APIRouter
+
+router = APIRouter()
+
+@router.get("/test")
+async def test_donations():
+    return {"message": "Donation route working fine!"}
