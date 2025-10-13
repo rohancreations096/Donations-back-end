@@ -32,3 +32,10 @@ async def me(authorization: str = Header(None)):
     if not user:
         raise HTTPException(status_code=401, detail="Invalid token")
     return {"user": user}
+from fastapi import APIRouter
+
+router = APIRouter()
+
+@router.get("/test")
+async def test_auth():
+    return {"message": "Auth route working properly!"}
