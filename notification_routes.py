@@ -26,3 +26,10 @@ class NotifyToken(BaseModel):
 async def notify_token(payload: NotifyToken, user=Depends(require_auth)):
     await send_fcm_to_token(payload.token, payload.title, payload.body, payload.data)
     return {"status": "ok"}
+from fastapi import APIRouter
+
+router = APIRouter()
+
+@router.get("/test")
+async def test_notifications():
+    return {"message": "Notification route working fine!"}
