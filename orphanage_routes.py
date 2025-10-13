@@ -39,3 +39,10 @@ async def patch_orphanage(orphanage_id: str, payload: OrphanageIn, user=Depends(
     if not updated:
         raise HTTPException(status_code=404, detail="Orphanage not found")
     return {"status": "ok"}
+from fastapi import APIRouter
+
+router = APIRouter()
+
+@router.get("/test")
+async def test_orphanages():
+    return {"message": "Orphanage route working fine!"}
