@@ -6,5 +6,5 @@ firebase-admin==6.0.1
 python-dotenv==1.0.0
 httpx==0.24.1
 razorpay==1.4.1
-typing-extensions==4.8.0
+typing-extensions==4.12.2
 starlette==0.36.3
