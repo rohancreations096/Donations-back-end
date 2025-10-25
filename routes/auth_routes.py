@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
 from pydantic import BaseModel
-from auth import verify_firebase_token, optionally_verify_firebase_token
+from auth import verify_firebase_token, require_auth_optional
 
 router = APIRouter()
 
