@@ -2,7 +2,7 @@ fastapi==0.110.0
 uvicorn==0.29.0
 pydantic
 pydantic-core
-firebase-admin
+firebase-admin~=4.5.0
 python-dotenv==1.0.0
 httpx==0.28.1          # <-- CORRECTED PIN
 typing-extensions==4.12.2
