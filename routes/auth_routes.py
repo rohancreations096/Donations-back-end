@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Header
 from pydantic import BaseModel
-from auth import verify_firebase_token, require_auth_optional
+# Corrected import to point to the file inside the 'utils' folder
+from utils.auth import verify_firebase_token, require_auth_optional
 
 router = APIRouter()
 
@@ -32,9 +33,12 @@ async def me(authorization: str = Header(None)):
     if not user:
         raise HTTPException(status_code=401, detail="Invalid token")
     return {"user": user}
-from fastapi import APIRouter
 
-router = APIRouter()
+# This part seems separate and correct
+# from fastapi import APIRouter # This import is redundant if already above
+
+# router = APIRouter() # This creates a NEW router, overwriting the old one. Be careful!
+# It might be better to keep the test route within the original router above.
 
 @router.get("/test")
 async def test_auth():
