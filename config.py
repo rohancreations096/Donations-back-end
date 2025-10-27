@@ -3,10 +3,10 @@
 from dotenv import load_dotenv
 import os
 
-# ATTEMPT #11: CONFIRMED IMPORTS FOR phonepe_sdk-2.1.5
-from phonepe.sdk.pg.standard_checkout import StandardCheckoutClient 
-from phonepe.sdk.pg.models.client_config import ClientConfig 
-from phonepe.sdk.pg.exceptions import PhonePeException
+# ATTEMPT #13: Using the corrected import path:
+from phonepe.sdk.pg.clients.standard_checkout_client import StandardCheckoutClient 
+from phonepe.sdk.pg.models.client_config import ClientConfig # Assuming this path is correct
+from phonepe.sdk.pg.exceptions import PhonePeException 
 
 
 load_dotenv() 
@@ -25,6 +25,7 @@ class Settings:
         if not cls.CLIENT_ID or not cls.CLIENT_SECRET:
             print("WARNING: PHONEPE_CLIENT_ID or PHONEPE_CLIENT_SECRET environment variables are missing on Render.")
             
+        # Instantiate ClientConfig 
         config = ClientConfig(
             env=cls.ENVIRONMENT, 
             client_id=cls.CLIENT_ID, 
@@ -34,13 +35,13 @@ class Settings:
         return StandardCheckoutClient(config)
 
 settings = Settings()
-# Initialize the client.
+# Initialize the client. This happens when the application starts.
 try:
     phonepe_client = settings.get_phonepe_client()
 except PhonePeException as e:
-    print(f"ERROR: PhonePe client initialization failed (Check Render Env Vars): {e}")
+    print(f"ERROR: PhonePe client initialization failed: {e}")
     phonepe_client = None 
 except Exception as e:
-    # This will catch a lingering ImportError if the path is still wrong
-    print(f"ERROR: General error during PhonePe client initialization: {e}")
+    # Catches the ImportError if the path is still wrong, or other general errors
+    print(f"ERROR: Could not initialize PhonePe client: {e}")
     phonepe_client = None
