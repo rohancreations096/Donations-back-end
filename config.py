@@ -2,9 +2,8 @@
 
 from dotenv import load_dotenv
 import os
-# FINAL CORRECTED Imports for the PhonePe SDK
-# These paths are based on the standard PhonePe Python SDK structure
-from phonepe.sdk.pg.standard_checkout_client import StandardCheckoutClient 
+# FINAL CORRECTED Imports for the PhonePe SDK - attempting with 'v1'
+from phonepe.sdk.pg.v1.standard_checkout_client import StandardCheckoutClient 
 from phonepe.sdk.pg.common.configs.client_config import ClientConfig 
 
 load_dotenv() 
@@ -36,6 +35,5 @@ settings = Settings()
 try:
     phonepe_client = settings.get_phonepe_client()
 except Exception as e:
-    # This print helps debug if initialization fails (e.g., due to configuration errors)
-    print(f"ERROR: Could not initialize PhonePe client: {e}") 
+    print(f"ERROR: Could not initialize PhonePe client: {e}")
     phonepe_client = None
