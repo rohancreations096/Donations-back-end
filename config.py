@@ -2,10 +2,9 @@
 
 from dotenv import load_dotenv
 import os
-# FINAL CORRECTED Imports for the PhonePe SDK - attempting a 'clients' submodule structure
-# This structure is common if the client class isn't directly exposed by the __init__.py of 'pg'
-from phonepe.sdk.pg.clients import StandardCheckoutClient 
-from phonepe.sdk.pg.configs import ClientConfig 
+# FINAL ATTEMPT: Assuming both classes are exposed directly by the 'pg' module
+from phonepe.sdk.pg import StandardCheckoutClient 
+from phonepe.sdk.pg import ClientConfig 
 
 load_dotenv() 
 
@@ -23,7 +22,6 @@ class Settings:
         if not cls.CLIENT_ID or not cls.CLIENT_SECRET:
             print("WARNING: PHONEPE_CLIENT_ID or PHONEPE_CLIENT_SECRET environment variables are missing.")
             
-        # NOTE: If this fails, the ClientConfig import is also probably wrong.
         config = ClientConfig(
             env=cls.ENVIRONMENT, 
             client_id=cls.CLIENT_ID, 
