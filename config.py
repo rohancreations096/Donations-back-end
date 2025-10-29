@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 
 # ✅ Correct imports for the official PhonePe SDK (from private repo)
-from phonepe.sdk.pg.clients.standard_checkout_client import StandardCheckoutClient
+from phonepe_sdk.pg.clients.standard_checkout_client import StandardCheckoutClient
 from phonepe.sdk.pg.models.client_config import ClientConfig
 from phonepe.sdk.pg.exceptions import PhonePeException
 
