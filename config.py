@@ -1,8 +1,11 @@
+# config.py
+
 from dotenv import load_dotenv
 import os
 
-# ✅ Correct imports for latest PhonePe SDK
-from phonepe.sdk.pg import PhonePePaymentClient, PhonePeEnvironment
+# Correct imports for the PhonePe SDK version you’re using
+from phonepe.sdk.pg.clients.standard_checkout_client import StandardCheckoutClient
+from phonepe.sdk.pg.models.client_config import ClientConfig
 from phonepe.sdk.pg.exceptions import PhonePeException
 
 load_dotenv()
@@ -14,22 +17,24 @@ class Settings:
     BACKEND_URL: str = os.getenv("BACKEND_URL")
 
     @classmethod
-    def get_phonepe_client(cls) -> PhonePePaymentClient:
+    def get_phonepe_client(cls) -> StandardCheckoutClient:
         if not cls.CLIENT_ID or not cls.CLIENT_SECRET:
-            print("⚠ Missing PHONEPE_CLIENT_ID or PHONEPE_CLIENT_SECRET in environment variables.")
+            print("⚠ Missing PHONEPE_CLIENT_ID or PHONEPE_CLIENT_SECRET environment variables.")
 
-        environment = (
-            PhonePeEnvironment.SANDBOX
-            if cls.ENVIRONMENT.upper() == "SANDBOX"
-            else PhonePeEnvironment.PRODUCTION
+        # Lowercase or uppercase check for environment may vary
+        env_value = cls.ENVIRONMENT.upper()
+        if env_value not in ("SANDBOX", "PRODUCTION"):
+            print(f"⚠ Unexpected PHONEPE_ENVIRONMENT value '{cls.ENVIRONMENT}', defaulting to SANDBOX.")
+            env_value = "SANDBOX"
+
+        # Build config
+        config = ClientConfig(
+            env=env_value,
+            client_id=cls.CLIENT_ID,
+            client_secret=cls.CLIENT_SECRET
         )
 
-        # ✅ Initialize PhonePe client properly
-        return PhonePePaymentClient(
-            merchant_id=cls.CLIENT_ID,
-            salt_key=cls.CLIENT_SECRET,
-            environment=environment
-        )
+        return StandardCheckoutClient(config)
 
 settings = Settings()
 
