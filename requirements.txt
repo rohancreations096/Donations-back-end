@@ -10,7 +10,6 @@ starlette==0.36.3
 requests==2.31.0
 google-api-core~=1.28.0
 
-# ✅ Correct PhonePe SDK source
 --index-url https://phonepe.mycloudrepo.io/public/repositories/phonepe-pg-sdk-python
 --extra-index-url https://pypi.org/simple
-phonepe-sdk==1.0.4
+phonepe-sdk==2.1.5
