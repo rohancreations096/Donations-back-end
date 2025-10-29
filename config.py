@@ -1,9 +1,8 @@
 from dotenv import load_dotenv
 import os
 
-# ✅ Correct imports for official PhonePe SDK v1.0.4
-from phonepe.sdk.pg import PhonePeClient
-from phonepe.sdk.pg.env import Env
+# ✅ Correct imports for PhonePe SDK v2.1.5
+from phonepe.sdk.pg import PhonePePaymentClient, PhonePeEnvironment
 from phonepe.sdk.pg.exceptions import PhonePeException
 
 load_dotenv()
@@ -16,17 +15,21 @@ class Settings:
 
     @classmethod
     def get_phonepe_client(cls):
-        """Initialize PhonePe client with proper environment."""
+        """Initialize PhonePe client with current environment."""
         if not cls.CLIENT_ID or not cls.CLIENT_SECRET:
             print("⚠ Missing PHONEPE_CLIENT_ID or PHONEPE_CLIENT_SECRET in environment variables.")
 
-        env = Env.SANDBOX if cls.ENVIRONMENT.upper() == "SANDBOX" else Env.PRODUCTION
+        environment = (
+            PhonePeEnvironment.SANDBOX
+            if cls.ENVIRONMENT.upper() == "SANDBOX"
+            else PhonePeEnvironment.PRODUCTION
+        )
 
         try:
-            client = PhonePeClient(
-                env=env,
+            client = PhonePePaymentClient(
                 merchant_id=cls.CLIENT_ID,
                 salt_key=cls.CLIENT_SECRET,
+                environment=environment,
             )
             print("✅ PhonePe client initialized successfully.")
             return client
