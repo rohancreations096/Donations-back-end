@@ -1,6 +1,13 @@
+# 🔒 Firebase key (never upload this)
+servicekeyaccount.json
+
+# 🐍 Python cache files
 __pycache__/
-.env
 *.pyc
-.vscode/
-*.pem
-*.json
+
+# 🧰 Virtual environments
+.venv/
+env/
+
+# 🖥️ System files
+.DS_Store
